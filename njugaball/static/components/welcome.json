@@ -1,0 +1,38 @@
+{
+  "states":{"states":""},
+  "is":"div",
+  "class":"fxd h100 w100 tc bg-dark",
+  "nodes":[
+    {
+      "is":"div",
+      "class":"mt-30",
+      "nodes":[
+    {
+      "is":"img",
+      "class":"logo ma",
+      "src":"/static/balls/styled/zahlenkugel-v1-200px-30.png",
+      "props":{"height":"100"},
+      "nodes":[""]
+    },
+    {
+      "is":"h1",
+      "class":" c-white gfont9 mt-10",
+      "nodes":[" Njuga Ball"]
+    },
+    {
+      "is":"button",
+      "class":"p10 mt-10 bg-white rd",
+      "nodes":[" Continue "],
+      "events":{"click":["@continueTo"]}
+    }
+    ,
+    {
+      "is":"p",
+      "class":"pt7 c-grey mt-20",
+      "nodes":["Dear Customer, you have been credited with K1.00 airtime. Please recharge by 01.01.2022 with K1.10 to repay your advance. ",{"is":"a","props":{},"class":"c-white fu","nodes":["T's and C's "],"events":{"click":["@gotoTermsConditions"]}},"apply."]
+    }
+    
+    ]
+    }
+    ]
+}

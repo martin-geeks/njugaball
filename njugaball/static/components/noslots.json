@@ -1,0 +1,38 @@
+{
+  "states":{},
+  "is":"div",
+  "class":"",
+  "nodes":[
+    {
+      "is":"div",
+      "class":"w300 bd-grey rd m2  h20",
+      "nodes":[
+        {"is":"h2","class":"mt-20","nodes":["@slots.msg"]}
+        ]
+    },
+    {
+      "is":"div",
+      "class":"p10 w100 mt-5 bg-white c-dark",
+      "nodes":["See More"]
+    },
+    {
+      "is":"ol",
+      "class":"w100 mt-10 p10 bg-black flow-x h30 noscrollbar",
+      "loop":[{"img":"static/main-icon.jpg","slot_id":"1996","title":"Slot 9"},{"img":"static/main-icon.jpg","slot_id":"1556","title":"Slot 2"},{"img":"static/main-icon.jpg","slot_id":"1996","title":"Slot 9"},{"img":"static/main-icon.jpg","slot_id":"1996","title":"Slot 9"}],
+      "nodes":[
+        {
+          "is":"li",
+          "class":"w40 sh-2 dl m2 bd-white",
+          "nodes":[
+            {"is":"img","src":"@img","class":"h20 "},
+            {
+              "is":"span",
+              "class":"p10 db",
+              "nodes":["@title"]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

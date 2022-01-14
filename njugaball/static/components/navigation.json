@@ -1,0 +1,73 @@
+{
+    "states":{"state":""},
+    "is":"div",
+    "class":"w100 sh-2  h100 bg-white  scroll-y scroll-x mobile-aside ",
+    "nodes":[
+      {
+        "is":"ul",
+        "class":"c-dark",
+        "nodes":[
+          {"is":"h6","class":"bg-dark c-white tc p10","nodes":["@username"]},
+          {
+            "is":"li",
+            "class":"clickable-blue gfont9 p10 flx-r",
+            "id":"myTokens",
+            "nodes":[{"is":"i","class":"ic ic-coin-pound","nodes":[]},"Tokens",{"is":"span","class":"bg-glight pd5 pt8 c-white rd","nodes":[" 25"]}],
+            "events":{"click":["@purchaseTokens"]}
+          },
+          {
+            "is":"li",
+            "class":"bg-gdark c-white gfont9 p10 ",
+            "nodes":[{"is":"i","class":"ic ic-play","nodes":[]}," Play Now",{"is":"i","class":"ic ic-chevron-down none","nodes":[]}]
+          },
+           {
+            "is":"li",
+            "class":"clickable-blue gfont9 p10 c-blue flx-r sh-2",
+            "nodes":[{"is":"i","class":"fa fa-bowling-ball ","nodes":[]},"Check Slots",{"is":"i","class":"ic ic-chevron-up","nodes":[]}],
+            "events":{"click":["@toggleSubMenu"]}
+          },
+          {
+            "is":"ol",
+            "class":"ml-20",
+            "loop":[{"title":" 100 Local","icon":"ic ic-users "},{"title":" 200 Local","icon":"ic ic-users","callback":"loadSlots"},{"title":" 1000  Global","icon":"ic ic-world"},{"title":" Settings","icon":"ic ic-settings"}],
+            "nodes":[
+              {"is":"li","class":"p10 nf clickable-grey","nodes":[{"is":"i","class":"@icon"},"@title"],"events":{"click":["@loadSlots"]}}
+              ]
+          },
+          {
+            "is":"li",
+            "class":"clickable-blue gfont9 c-blue p10 flx-r sh-2",
+            "id":"myAccount",
+            "nodes":[{"is":"i","class":"ic ic-user","nodes":[]}," My Account",{"is":"i","class":"ic ic-chevron-down","nodes":[]}],
+            "events":{"click":["@toggleSubMenu"]}
+          },
+          {
+            "is":"ol",
+            "class":"m-20 none",
+            "id":"myAccountOptions",
+            "loop":[{"title":" Deposit","icon":"ic ic-cc-visa"},{"title":" Withdraw","icon":"ic ic-coin-dollar"},{"title":" Transaction Summary","icon":"ic ic-paperclip"},{"title":" Settings","icon":"ic ic-settings"}],
+            "nodes":[
+              {"is":"li","class":"p10 nf clickable-grey","nodes":[{"is":"i","class":"p10 @icon"},"@title"],"events":{"click":["@accountSubOptions"]}}
+              ]
+          }
+          ]
+      },
+      {
+        "is":"button",
+        "class":"btn p10 bg-alert c-white w100",
+        "nodes":[" Logout"],
+        "events":{"click":["@logout"]}
+      },
+      {
+        "is":"div",
+        "class":"tc",
+        "nodes":[" —"]
+      },
+      {
+        "is":"button",
+        "class":"btn rd bg-blue p10 c-white mt-10",
+        "nodes":[" Clear Cookies"],
+        "events":{"click":["@clearCookies"]}
+      }
+      ]
+}

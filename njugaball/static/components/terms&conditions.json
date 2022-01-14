@@ -1,0 +1,22 @@
+{
+  "states":{ "state":"","conditions":" No Data","terms":"No Data"},
+  "is":"div",
+  "class":"",
+  "nodes":[
+    {
+      "is":"div",
+      "class":"p10 w100 bg-default c-grey",
+      "nodes":["Terms & Conditions"]
+    },
+    {
+      "is":"p",
+      "class":" tc",
+      "nodes":[
+        "@terms.text",
+        {"is":"span","class":"db pt8","nodes":["Last Updated: @terms.last_updated"]},
+        "@conditions.text",
+        {"is":"span","class":"db pt8","nodes":["Last Updated: @conditions.last_updated"]}
+        ]
+    }
+    ]
+}

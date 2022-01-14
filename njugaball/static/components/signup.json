@@ -1,0 +1,118 @@
+{
+	"states":{},
+	"is":"div",
+	"class":"",
+	"nodes":[
+		{
+			"is":"div",
+			"class":"sh-desk w70m rd ma-desk mt-20 mt-desk-20 ",
+			"nodes":[
+			  {
+			    "is":"h1",
+			    "class":"w100",
+			    "nodes":[" Sign Up <br />Play & Win"]
+			  },
+				{
+					"is":"div",
+					"class":"circle-50 bd-gdark ma tc ",
+					"nodes":[
+						{
+							"is":"i",
+							"class":"ic ic-lock mt-5 dl"
+						}
+					]
+				},
+				{
+					"is":"form",
+					"class":"bd-gdar rd w80 p10-desk w60m ma deskstyle",
+					"id":"#formEl",
+					"nodes":[
+					{
+					"is":"label",
+					"class":"flx-r tc bg-white rdr mt-2 c-dark ",
+					"nodes":[
+						{
+							"is":"i",
+							"class":"ic ic-user  mt-2 tc bg-white w30"
+						},
+						{
+							"is":"input",
+							"class":"p10 bg-dark bd-white c-white w70 rdl",
+							"props":{"type":"username","name":"username","placeholder":"username"}
+						}
+						
+						]
+					},
+						{
+					"is":"label",
+					"class":"flx-r tc bg-white rdr mt-2 c-dark ",
+					"nodes":[
+						{
+							"is":"i",
+							"class":"ic ic-phone  mt-2 tc bg-white w30"
+						},
+						{
+							"is":"input",
+							"class":"p10 bg-dark bd-white c-white w70 rdl",
+							"props":{"type":"phone","name":"phone","placeholder":"+260 -957368808"}
+						}
+						
+						]
+					},
+						{
+										"is":"label",
+										"class":"flx-r tc bg-white bd-white c-dark rdr mt-2",
+										"nodes":[
+											{
+												"is":"span",
+												"class":" mt-2 tc bg-white w30",
+												"nodes":["email"]
+											},
+											{
+												"is":"input",
+												"class":"p10 bg-dark c-white w70 rdl",
+												"props":{"type":"email","name":"email","placeholder":"myusername"}
+											}
+											
+										]
+						},
+						{
+										"is":"label",
+										"class":"flx-r tc bg-white bd-white c-dark rdr mt-2",
+										"nodes":[
+											{
+												"is":"i",
+												"class":"ic ic-key  mt-2 tc bg-white w30"
+											},
+											{
+												"is":"input",
+												"class":"p10 bg-dark c-white w70 rdl",
+												"props":{"type":"password","name":"password","placeholder":"password"}
+											}
+											
+										]
+						},
+						{
+							"is":"p",
+							"class":"pt8 ma tc gfont7",
+							"nodes":["User data is protected by SHA-2 security at high level & End-to-End User encryption is implemented on the platform."]
+						},
+						{
+						    "is":"button",
+						    "class":"btn p10 circle-50 bg-yellow c-white pt8 db ma btn-desk",
+						    "nodes":[
+						        "Sign Up",
+						        {
+						            "is":"i",
+						            "class":"ic ic-arrow-right"
+						        }
+						        ],
+						        "props":{"type":"button"},
+						        "events":{"click":["@signup"]}
+						}
+					]
+				}
+			]
+		}
+	]
+}

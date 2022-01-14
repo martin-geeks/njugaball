@@ -1,0 +1,114 @@
+{
+  "states":{},
+  "is":"div",
+  "class":"",
+  "nodes":[
+    {
+      "is":"h2",
+      "class":"pd5 width",
+      "nodes":[" Choose Deposit Method"]
+    },
+    {
+      "is":"div",
+      "class":"width",
+      "nodes":[
+         {"is":"h3","class":"width bg-white c-dark p10","nodes":[{"is":"i","class":"ic ic-phone"}," Mobile Money Wallets"]},
+         {
+      "is":"ul",
+      "class":"mt-10 flx-r width",
+      "loop":[{"colors":"c-alert bg-white","title":"Airtel \n Money"," main":"bg-white","wallet":"airtel","phone":"+260—975117141"},{"colors":"blue bg-yellow","title":"MTN \n MOMO"," main":"bg-white","wallet":"mtn","phone":"+260—961767777"},{"colors":"c-white bg-green2","title":"Zamtel \n Kwacha"," main":"bg-white","wallet":"zamtel","phone":"+260 - 957368808"}],
+      "nodes":[
+        {"is":"li","class":"p10  gfont  width30 height @colors hoverSize m2 rd","nodes":[{"is":"h1","class":"mt-20","nodes":["@title"]}],"props":{"data-wallet":"@wallet","data-colors":"@colors","data-phone":"@phone"},"events":{"click":["@mobileWallet"]}}
+        ]
+    },
+         {
+           "is":"div",
+           "class":" width sh-2 h300 fxd b-0 bg-dark tc flow-y trans-margin-bottom rd-top mb-100",
+           "id":"paymentProcessor",
+           "nodes":[
+             {"is":"h2","class":"gfont9 m2 flx-r","nodes":["Payment Processor",{"is":"i","class":"ic ic-arrow-down-left clickable-warning","events":{"click":["@closePaymentProcessor"]}}]},
+             {"is":"p","class":"","nodes":["Welcome to the payment service powered by Zeiro .Inc"]},
+             {
+               "is":"label",
+               
+               "class":"db mt-10",
+               "nodes":[
+                 "Enter your @payment.provider line"
+                 ]
+             },
+             {
+               "is":"input",
+               "class":"bg-dark bd-grey pt15 pd5 gfont no-outline mt-10 w80 rd tc fs-10 bd-style-dashed",
+               "props":{"name":"paymentinput","placeholder":"@payment.demo"}
+             },
+             {"is":"div","class":"w100","nodes":[]},
+             {
+               "is":"button",
+               "class":"tc  p10 mt-5 gfont8 @payment.colors",
+               "nodes":[" Pay Now"],
+               "events":{"click":["@makeMobilePayment"]}
+             }
+             ]
+         }
+    ]
+    },
+    {
+      "is":"div",
+      "class":"width mt-10",
+      "nodes":[
+        {
+          "is":"h3",
+          "class":"width bg-white c-dark p10",
+          "nodes":[" Bank Wallet "]
+        },
+        {
+          "is":"form",
+          "class":" width mt-10",
+          "nodes":[
+            {
+              "is":"label",
+              "class":"flx-r w80 ma",
+              "props":{"for":"cardNumber"},
+              "nodes":[" Enter your card details: ",{"is":"i","class":"ic ic-cc-visa pt15"},{"is":"i","class":"ic ic-cc-mastercard pt15"},{"is":"i","class":"ic ic-cc-discover pt15"},{"is":"i","class":"ic ic-cc-amex pt15"}]
+            },
+             {
+               "is":"input",
+               "id":"cardNumber",
+               "class":"bg-dark bdl-grey  pd5 gfont no-outline mt-5 w80  tc fs-10 ",
+               "props":{"name":"cardNumber","placeholder":"Card Number","type":"number"}
+             },
+             {
+               "is":"ul",
+               "class":"w80 ma flx-r",
+               "nodes":[
+                    {
+               "is":"input",
+               "id":"cardNumber",
+               "class":"bg-dark bdl-grey  pd5 gfont no-outline mt-5 width30 tc fs-10 ",
+               "props":{"name":"cardcvv","placeholder":"CVV","type":"number","max":3}
+             },   {
+               "is":"input",
+               "id":"cardNumber",
+               "class":"bg-dark bdl-grey  pd5 gfont no-outline mt-5  tc fs-10 ",
+               "props":{"name":"cardexpire","placeholder":"Card Number","type":"date"}
+             }
+                 ]
+             },
+             {
+               "is":"button",
+               "class":"p10 bg-white blue gfont",
+               "nodes":[" Make Payment"],
+               "props":{"type":"button"},
+               "events":{"click":["@makeCardPayment"]}
+             }
+            ]
+        }
+        ]
+    },
+    {
+      "is":"div",
+      "class":"mobile-money-qr-payment",
+      "nodes":[]
+    }
+    ]
+}

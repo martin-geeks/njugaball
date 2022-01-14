@@ -1,0 +1,7 @@
+flask
+bcrypt
+flask_sqlalchemy
+tea_encrypt
+scryp
+sqlalchemy_serializer
+mysql

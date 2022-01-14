@@ -1,0 +1,13 @@
+{
+  "states":{},
+  "is":"div",
+  "class":"",
+  "nodes":[
+      {
+        "is":"div",
+        "class":"p10 bd-white",
+        "nodes":["@username"]
+      }
+    
+    ]
+}

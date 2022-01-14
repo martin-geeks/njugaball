@@ -1,0 +1,57 @@
+{
+	"states":{"state":"","navbar":"flx-r"},
+	"is":"div",
+	"class":"fxd t-0 w100 ",
+	"nodes":[
+	  {
+	    "is":"div",
+	    "class":"bg-white tc flx-r w100 pd5 m-only",
+	    "nodes":[
+	 {
+	   "is":"div",
+	   "class":"c-blue p10 ",
+	   "nodes":[
+	     {"is":"i","class":"ic ic-coin-dollar"},
+	     {"is":"span","class":"gfont pt15","nodes":[" Njuga - Ball"]}
+	     ]
+	 },
+	 {
+	   "is":"div",
+	   "class":"c-dark d-only",
+	   "nodes":[" Toolbar"]
+	 },
+	 {
+	   "is":"button",
+	   "class":" burger-grey bg-white p10 m-only",
+	   "nodes":[
+	     {"is":"span","class":"m2 rd"},
+	     {"is":"span","class":"m2 rd"},
+	     {"is":"span","class":"m2 rd"}
+	     ],
+	     "events":{"click":["@toggleNavBar"]}
+	 }
+	 ]
+}
+	 ,
+	 {
+	   "is":"div",
+	   "class":"bg-white sh tc flx-r pd5 d-only",
+	   "nodes":[
+	     	 {
+	   "is":"div",
+	   "class":"c-dark p10 ",
+	   "nodes":[
+	     {"is":"i","class":"ic ic-coin-dollar"},
+	     {"is":"span","class":"gfont pt15","nodes":[" Njuga - Ball"]}
+	     ]
+	 },
+	       {
+	         "is":"div",
+	         "class":"c-white circle-50 bg-blue flx-c",
+	         "nodes":[{"is":"i","class":" dl mt-5 ic ic-user"},{"is":"i","class":"ic ic-chevron-down"},{"is":"ol","class":"h40  w300 bg-white","nodes":["Menu"]}]
+	       }
+	       
+	     ]
+	 }
+	  ]
+}
