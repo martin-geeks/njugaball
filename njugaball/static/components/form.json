@@ -13,7 +13,8 @@
 					"nodes":[
 						{
 							"is":"i",
-							"class":"ic ic-lock mt-5 dl"
+							"class":"circle-50 mt-5 dl",
+							"props":{"uk-icon":"lock"}
 						}
 					]
 				},

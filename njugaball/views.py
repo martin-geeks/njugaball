@@ -1,5 +1,5 @@
 from njugaball import create_app
-from njugaball import db,Serializer,DateString,render_template,jsonify,request,make_response,redirect,session,time,inspect,json,encrypt,decrypt,hash_password,check_password,User,Draw,Mail,Message,generateOTP
+from njugaball import db,Serializer,DateString,render_template,jsonify,request,make_response,redirect,session,time,inspect,json,encrypt,decrypt,hash_password,check_password,User,Draw,Mail,Message,generateOTP,socketio
 
 app = create_app()
 mail = Mail(app)
@@ -158,12 +158,8 @@ def sessions():
   if request.form['component']:
     if component:
       print('Recent Found')
-      if component['component'] == 'static':
-        print('Not a component')
-        return jsonify({'error':True})
-      else:
-        session.pop('component',None)
-        return jsonify(json.loads(component))
+      session.pop('component',None)
+      return jsonify(json.loads(component))
     else:
       print('Recent not found')
       return jsonify({'error':'No recent'})
@@ -201,3 +197,14 @@ def user():
     return jsonify(user)
   else:
     return jsonify({'error':True,'message':'Permission Denied'})
+
+#SOCKET IO
+@socketio.on('my event')
+def handle_message(data):
+  print('Message ',data)
+def ack():
+  print("Sent MSG")
+@socketio.on('notification')
+def handle_notification():
+  json = {'error':True}
+  send(json,json=True,callback=ack)

@@ -8,7 +8,7 @@ from njugaball.utils import DateString,check_password,hash_password,generateOTP
 from scryp import encrypt,decrypt
 from sqlalchemy.inspection import inspect
 from njugaball.models import db,User,Draw
-
+from flask_socketio import SocketIO
 KEY = "de1182b0f4203cad8d2ec629e35403d7"
 
 class Serializer(object):
@@ -30,7 +30,7 @@ app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://u0_a128: @localhost/njuball'
 
 SQLALCHEMY_DATABASE_URI = "mysql://{username}:{password}@{hostname}/{databasename}".format(
-    username="u0_a128",
+    username="u0_a110",
     password="",
     hostname="localhost",
     databasename="njuball",
@@ -46,10 +46,11 @@ app.config['MAIL_USE_SSL'] = True
 app.config["LOG_TYPE"] = "JSON"
 app.config['LOG_FILENAME'] = 'njugaball-log'
 app.config['LOG_LOCATION'] = os.path.abspath('njugaball/logs')
-
+socketio = SocketIO()
 Log(app)
 #import njugaball.models
 def create_app():
   db.init_app(app)
+  socketio.init_app(app)
   return app
 import njugaball.views
