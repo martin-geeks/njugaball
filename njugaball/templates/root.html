@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='/css/zaphy.css')}}">
 <link rel="stylesheet" href="{{ url_for('static',filename='/css/zaphy-min.css')}}">
 <link rel="stylesheet" href="{{ url_for('static',filename='/css/all.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
 <link rel="manifest" href="/static/manifest.json">
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
@@ -30,18 +31,27 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
+<!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/uikit.css')}}"  media="screen,projection"/>
+
+  
 <script>
 window.onerror = function(e,r,p,t) {
 alert(e + " \n " + r + " \n Line-Y: " + p + " \n Line-X: " + t);
 }
 
 </script>
+
 <!--
  <script src="https://widget.northeurope.cloudapp.azure.com:9443/v0.1.0/mobile-money-widget-mtn.js"></script>-->
 </head>
 
-<body class="bg-dark">
+<body class="bg-white">
 <div id="root"></div>
+
+
 <div id="popUpContainer"></div>
 <!--
 <div
@@ -57,6 +67,11 @@ alert(e + " \n " + r + " \n Line-Y: " + p + " \n Line-X: " + t);
 <script src="{{ url_for('static',filename='/js/socket.io.js')}}" defer></script>
 <script src="{{ url_for('static',filename='/js/load-stacks.js')}}" defer></script>
 <script src="{{ url_for('static',filename='/js/main.js')}}" defer></script>
+  <script src="{{url_for('static',filename='/js/uikit.js')}}"></script>
+    <script src="{{url_for('static',filename='/js/uikit-icons.js')}}"></script>
+  <script>
+    
+  </script>
 </body>
 
 

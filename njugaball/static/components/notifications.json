@@ -1,0 +1,53 @@
+{
+  "states":{"state":"","message":"No any notification"},
+  "is":"div",
+  "class":"",
+  "nodes":[
+    {
+      "is":"div",
+      "class":"w300 flx-r",
+      "nodes":[
+        {
+          "is":"form",
+          "class":"uk-search uk-search-default",
+          "nodes":[
+            {"is":"span","props":{"uk-search-icon":""}},
+            {"is":"input","class":"uk-search-input","props":{"type":"search","placeholder":"Search notifications"}}
+            ]
+        },
+        {"is":"span","class":"uk-icon-button","props":{"uk-icon":"refresh"}},
+    {
+      "is":"div",
+      "class":"uk-inline",
+      "nodes":[
+        {
+          "is":"button",
+          "class":"uk-icon-button",
+          "props":{"uk-icon":"more"},
+          "nodes":[
+            {
+              
+            }
+            ]
+        },
+        {
+          "is":"div",
+          "props":{"uk-dropdown":"pos: top-right"},
+          "nodes":[
+            {"is":"ul","class":"uk-nav uk-dropdown-nav",
+            "loop":[{"title":"Mark all as seen","func":"mark_all","icon":"check"},
+            {"title":"Unmark All","func":"unmark","icon":"close"}
+            
+            ],
+            "nodes":[
+              {"is":"li","class":"uk-active tl","nodes":[{"is":"span","props":{"uk-icon":"@icon","data-action":"@func"}}," @title"]},
+              "@t"
+              ]}
+            ]}
+        ]
+    }
+        ]
+        
+    }
+    ]
+}

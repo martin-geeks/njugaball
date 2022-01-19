@@ -1,14 +1,37 @@
 var components,user,header,navigation,main,root,lastErrorData;
+
+
+var myNav = {"states":{"state":"people"},"is":"div","class":"","id":"offcanvas-flip","props":{"uk-offcanvas":"flip: false; overlay: true; mode: push"},"nodes":[
+			  {
+			    "is":"div",
+			    "class":"uk-offcanvas-bar",
+			    "nodes":[
+			      {
+			        "is":"ul",
+			        "class":"flx-r clickable-blue p10 rd",
+			        "nodes":[
+			          {"is":"span","props":{"uk-icon":"user"}},
+			          {"is":"span","nodes":["@navigationData.username"]}
+			          ]
+			      }
+			      ]
+			  }
+			  ]}
+
+
+
+
 components = {
 	"main": {
-		"states":{},
+		"states":{"username":" 5"},
 		"is":"div",
 		"class":"",
 		"nodes":[
 			{"is":"div","id":"headerContainer","class":"","nodes":[]},
 			{"is":"div","id":"mainContainer","class":"","nodes":["main"]},
 			{"is":"div","id":"popUp","class":"","nodes":[]},
-			{"is":"div","id":"navBar","class":"bg-yellow w70 h100 fxd m-trans  t-0 ml-100 ","nodes":[]}
+			{"is":"div","id":"navBar","class":"none","nodes":[]},
+		myNav
 		]
 	},
 	"reset": {
@@ -159,7 +182,7 @@ components.loader = {
   "nodes":[
     {
       "is":"div",
-      "class":"rotate-C circle-50 bd-white bdl-none ma",
+      "class":"rotate-C circle-50 bd-black bdl-none ma",
       "nodes":[]
     },
     "processing..."
@@ -200,7 +223,7 @@ var handlers = {
     main.update(components.loader)
     requestData({method:'post',url:'/sign_user',params:{username:username,phone:phone,email:email,password:password,'njuball':true},type:'json'},function(response){
       if(response.error) return showError(data={msg:response.message});
-      if(response.exists) return setPopup(response.message);
+      if(response.exists) return M.toast({html: response.message, classes: 'rounded'}); //setPopup(response.message);
       
       var OTP = prompt('Enter One-Time-Pin');
       if(response.otp === OTP){
@@ -268,13 +291,15 @@ var handlers = {
     
   },
   toggleNavBar : function() {
-    
-    var list = navBar.classList;
+    //M.toast({html: 'I am a toast!', classes: 'rounded'});
+    /*var list = navBar.classList;
     if(list.contains('ml-100')) {
       navBar.classList.remove('ml-100');
     } else {
       navBar.classList.add('ml-100');
     }
+    */
+    UIkit.nav().toggle(2,true)
   },
   clearCookies: function() {
     delete localStorage['saved']
@@ -360,6 +385,19 @@ var handlers = {
   },
   makeCardPayment: function() {
     main.update(components.loader)
+  },
+  showNotifications: function() {
+    main.update(components.notifications);
+    data = {"notifications":false,"message":"Hi "+user.username+", you do not have any notifications." }
+    //main.update({states:data});
+    UIkit.notification({
+    message: '<div class="tc c-grey pt8"> <span uk-icon="bell" class="c-alert"></span> Draw has ended</div>',
+    status: 'primary',
+    pos: 'top-center',
+    timeout: 2000
+});
+
+    pushState('notifications','Notifications','/notifications');
   }
 }
 window.onload =  function() {
@@ -388,8 +426,35 @@ requestData({method: 'post',url:'/sessions',params:{component:true},type:'json'}
           signup()
         } else {
           main.update(components.reset);
-       main.update(components[response.component]);
+        
+        
+       Object.keys(components).forEach(e =>{
+         if( response.component == e ) {
+           main.update(components[response.component]);
        pushState(response.component,response.title,response.url)
+         } else {
+           main.update(components.welcome)
+         }
+          
+       })
+       
+       var i = 0;
+       /*
+       do {
+         alert('None')
+       } while (i <Object.keys(components).length) {
+         if(response.component === Object.keys(components)[i]) {
+           alert('FOUND ')
+           return 0
+         } else {
+           
+           //i = + 1
+           
+         }
+         i =+1;
+         break;
+       }*/
+       
         }
        
       } else {
@@ -428,7 +493,7 @@ function buildAllUI() {
       if(response.error) return showError(data={msg:response.message});
  
       user = response;
-      
+      ui.update({states:{navigationData:user}})
     });
     
   loadComponent('header',handlers,function(component){
@@ -443,10 +508,12 @@ function buildAllUI() {
     
     navigation.update(component);
     navigation.update({states:user})
+    
+    
   });
   loadComponent('index',handlers,function(component){
     if(component.error) return showError(data={msg:'Error while processing component'});
-    //component.index = component
+    components.index = component
     main.update(component);
     
     pushState('index','Njuga Ball ','/')
@@ -465,10 +532,14 @@ function buildAllUI() {
         }
        
       } else {
+        
         requestData({method:'get',url:'/user-info',type:'json'},function(response){
       if(response.error) return showError(data={msg:response.message});
+      //main.update(components.reset)
+      //main.update(components.index)
       main.update({states:response});
       user = response;
+      
       navigation.update({states: user})
     });
       }
@@ -488,7 +559,13 @@ function buildAllUI() {
     if(component.error) return showError(data={msg: 'Error while processing component'});
     components.slots = component;
   });
-  
+  loadComponent('notifications',handlers,function(component){
+    if(component.error) return showError(data={msg:'Error while processing component'});
+    
+    components.notifications = component;
+    
+    
+  });
 }
 
 function signup(){
@@ -548,6 +625,7 @@ function parseComponent() {
       }
     })
 }
+
 var routes = {
   "noslots": function() {}
 }

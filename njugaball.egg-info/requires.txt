@@ -1,7 +1,8 @@
 flask
-bcrypt
 flask_sqlalchemy
+flask_mail
 tea_encrypt
 scryp
 sqlalchemy_serializer
 mysql
+flask_web_log

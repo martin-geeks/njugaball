@@ -1,10 +1,10 @@
 Metadata-Version: 1.0
 Name: njugaball
-Version: 0.0.0
-Summary: UNKNOWN
-Home-page: UNKNOWN
-Author: UNKNOWN
-Author-email: UNKNOWN
+Version: 0.9.9
+Summary: A web application for playing real lottery.
+Home-page: https://github.com/martin-geeks/njugaball
+Author: Martin Tembo
+Author-email: martintembo.zm@gmail.com
 License: UNKNOWN
 Description: UNKNOWN
 Platform: UNKNOWN

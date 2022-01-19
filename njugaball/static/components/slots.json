@@ -3,22 +3,23 @@
   "is":"div",
   "class":"",
   "nodes":[
-    {"is":"div","class":"tc  flx-r","nodes":[{"is":"button","class":"btn w30 bg-white c-dark p10","nodes":["Manage"]},{"is":"select","class":"p10 bg-yellow c-white w70","nodes":[{"is":"option","class":"","nodes":["Clear All"]}]}]},
+    {"is":"div","class":"tc  flx-r","nodes":[{"is":"button","class":"btn w30 bg-green-500 c-white pd5 flx-c tc circle-40 ","nodes":[{"is":"i","class":"ic ic-settings w100 tc mt-30"}, {"is":"span","class":"w100 tc none","nodes":["manage"]}]},{"is":"select","class":"p10 bg-black m2 rd c-white w70 ","nodes":[{"is":"option","class":"","nodes":["Change Ball"]},{"is":"option","class":"","nodes":["Clear All"]}]}]},
     {
       "is":"div",
-      "class":"w300 bd-grey rd m2 ",
+      "class":"w300 bd-black bdl-none bdr-none  m2 ",
       "nodes":[
         
         {
           "is":"ol",
-        "class":"mt-20",
+        "class":"mt-20 carousel",
         "loop":"@slots",
         "nodes":[
            {
-          "is":"li",
-          "class":"w40 sh-2 dl m2 bd-white circle-100 bg-yellow",
+          "is":"a",
+          "class":" carousel-item sh-2  bd-black blue",
+          "props":{"href":"#one!"},
           "nodes":[
-            {"is":"h1","class":"mt-20 em4 gfont","nodes":["@picked"]},
+            {"is":"h1","class":" em3 gfont text-3xl","nodes":["@picked"]},
             {
               "is":"span",
               "class":"p10 pt8",

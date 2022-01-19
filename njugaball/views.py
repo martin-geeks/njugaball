@@ -28,8 +28,10 @@ app.before_request(f)
 
 @app.route('/')
 def home():
+  db.create_all()
   res = make_response()
-  res.set_cookie('test','YES',max_age=60*60*60)
+  #res.set_cookie('test',value='YES',max_age=None,path='/',domain='127.0.0.1')
+  print('COOKIE >>>',request.cookies.get('njugaball'))
   return render_template('root.html')
 
 @app.route('/welcome')
@@ -138,6 +140,7 @@ def page_not_found(error):
   path = request.path.split('/')
   component = path[1]
   session['component'] = json.dumps({'url':request.path,'component':component,'title':component.title()})
+  print('$###$####')
   print(session)
   return redirect('/',302)
 
@@ -146,13 +149,23 @@ def sessions():
   component = None
   try:
     component = session['component']
+    print("TESTED")
   except KeyError:
     component = False
+  if component == 'static':
+    print('Yeskghhd')
+  print('TEST COMPONENT:', component)
   if request.form['component']:
-    if session['component']:
-      session.pop('component',None)
-      return jsonify(json.loads(component))
+    if component:
+      print('Recent Found')
+      if component['component'] == 'static':
+        print('Not a component')
+        return jsonify({'error':True})
+      else:
+        session.pop('component',None)
+        return jsonify(json.loads(component))
     else:
+      print('Recent not found')
       return jsonify({'error':'No recent'})
   else:
     return jsonify({'error':True})

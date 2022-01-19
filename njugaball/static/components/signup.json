@@ -99,7 +99,7 @@
 						},
 						{
 						    "is":"button",
-						    "class":"btn p10 circle-50 bg-yellow c-white pt8 db ma btn-desk",
+						    "class":"btn p10 blue  waves-effect waves-light",
 						    "nodes":[
 						        "Sign Up",
 						        {

@@ -5,30 +5,30 @@
 	"nodes":[
 	  {
 	    "is":"div",
-	    "class":"bg-white tc flx-r w100 pd5 m-only",
+	    "class":"blue-grey darken-4 tc flx-r w100 pd5 bdb-grey m-only",
 	    "nodes":[
 	 {
 	   "is":"div",
-	   "class":"c-blue p10 ",
+	   "class":"c-dark p10  ",
 	   "nodes":[
 	     {"is":"i","class":"ic ic-coin-dollar"},
-	     {"is":"span","class":"gfont pt15","nodes":[" Njuga - Ball"]}
+	     {"is":"span","class":"gfont pt12","nodes":[" Njuga - Ball"]}
 	     ]
 	 },
 	 {
 	   "is":"div",
-	   "class":"c-dark d-only",
-	   "nodes":[" Toolbar"]
+	   "class":"flx-r w30",
+	   "nodes":[
+	     {"is":"span","class":"uk-icon-button","props":{"uk-icon":"bell"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":""},"nodes":[""]}],"events":{"click":["@showNotifications"]}},
+	     {"is":"span","class":"uk-icon-button" ,"props":{"uk-icon":"mail"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":""},"nodes":[""]}]}
+	     ]
 	 },
 	 {
 	   "is":"button",
-	   "class":" burger-grey bg-white p10 m-only",
-	   "nodes":[
-	     {"is":"span","class":"m2 rd"},
-	     {"is":"span","class":"m2 rd"},
-	     {"is":"span","class":"m2 rd"}
-	     ],
-	     "events":{"click":["@toggleNavBar"]}
+	   "class":"uk-icon-button m-only",
+	   "nodes":[{"is":"span","class":"","props":{"uk-icon":"menu"},"nodes":[]}],
+	   "props":{"uk-toggle":"target: #offcanvas-flip"},
+	   "events":{"click":["@toggleNavBar"]}
 	 }
 	 ]
 }
@@ -48,7 +48,19 @@
 	       {
 	         "is":"div",
 	         "class":"c-white circle-50 bg-blue flx-c",
-	         "nodes":[{"is":"i","class":" dl mt-5 ic ic-user"},{"is":"i","class":"ic ic-chevron-down"},{"is":"ol","class":"h40  w300 bg-white","nodes":["Menu"]}]
+	         "nodes":[
+	           {"is":"i","class":" dl mt-5 ic ic-user"},
+	         {"is":"i","class":"ic ic-chevron-down"},
+	            {
+            "is":"ol",
+            "class":"m-20 bg-white p10 sh-2 width ",
+            "id":"myAccountOptions",
+            "loop":[{"title":" Deposit","icon":"ic ic-cc-visa"},{"title":" Withdraw","icon":"ic ic-coin-dollar"},{"title":" Transaction Summary","icon":"ic ic-paperclip"},{"title":" Settings","icon":"ic ic-settings"}],
+            "nodes":[
+              {"is":"li","class":"p10 w100  nf clickable-grey c-dark","nodes":[{"is":"i","class":"p10 @icon"},"@title"],"events":{"click":["@accountSubOptions"]}}
+              ]
+          }
+	         ]
 	       }
 	       
 	     ]

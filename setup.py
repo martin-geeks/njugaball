@@ -11,12 +11,12 @@ setup(
     include_package_data=True,
     install_requires=[
         'flask',
-        'bcrypt',
         'flask_sqlalchemy',
         'flask_mail',
         'tea_encrypt',
         'scryp',
         'sqlalchemy_serializer',
-        'mysql'
+        'mysql',
+        'flask_web_log'
     ],
 )

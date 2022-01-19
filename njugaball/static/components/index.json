@@ -1,12 +1,12 @@
 {
   "states":{},
   "is":"div",
-  "class":"",
+  "class":"bg-black mt-20",
   "nodes":[
       {
         "is":"div",
-        "class":"p10 bd-white",
-        "nodes":["@username"]
+        "class":"p10 bd-white c-dark rd p10",
+        "nodes":["Welcome to Njuga Ball"]
       }
     
     ]
