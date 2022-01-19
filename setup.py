@@ -17,6 +17,8 @@ setup(
         'scryp',
         'sqlalchemy_serializer',
         'mysql',
+        'bcrypt',
+        'flask_socketio',
         'flask_web_log'
     ],
 )
