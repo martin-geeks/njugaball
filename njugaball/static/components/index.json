@@ -1,7 +1,7 @@
 {
   "states":{},
   "is":"div",
-  "class":"bg-black mt-20",
+  "class":" mt-20",
   "nodes":[
       {
         "is":"div",

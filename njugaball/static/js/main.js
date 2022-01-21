@@ -1,5 +1,5 @@
 var components,user,header,navigation,main,root,lastErrorData;
-
+//var socket = io();
 
 var myNav = {"states":{"state":"people"},"is":"div","class":"","id":"offcanvas-flip","props":{"uk-offcanvas":"flip: false; overlay: true; mode: push"},"nodes":[
 			  {
@@ -387,17 +387,51 @@ var handlers = {
     main.update(components.loader)
   },
   showNotifications: function() {
+    main.update(components.reset);
     main.update(components.notifications);
-    data = {"notifications":false,"message":"Hi "+user.username+", you do not have any notifications." }
-    //main.update({states:data});
-    UIkit.notification({
-    message: '<div class="tc c-grey pt8"> <span uk-icon="bell" class="c-alert"></span> Draw has ended</div>',
-    status: 'primary',
-    pos: 'top-center',
-    timeout: 2000
-});
+    
+requestData({method:'get',url:'/getNotifications',type:'json'},function(response){
+  if(response.error) return showError(data={msg:'Could not fetch  notifications'});
+  if(response.notifications.length === 0) {
+    main.update({states: {message:"No Notifications",notifications:[]}});
+  } else if(response.notifications.length >= 1) {
+    
+main.update({states: {message:'',notifications:response.notifications}});
+  }
+  //alert(JSON.stringify(response))
+})
 
     pushState('notifications','Notifications','/notifications');
+  },
+  refreshNotifications: function(){
+    
+    handlers.showNotifications();
+  },
+  notificationOption: function() {
+    notification_id = this.parentElement.parentElement.previousSibling.dataset.id;
+    action = this.dataset.action;
+    seen = this.dataset.seen;
+    requestData({method:'post',url:'/notifications_handle?action='+action+'&notification_id='+notification_id,params:{action:action,key:notification_id,seen:seen},type:'json'},function(response){
+      if(response.error) return setPopup("Couldn't process.")
+      main.update({states: {notifications:response}})
+    });
+  },
+  closeNotification: function(e){
+    dist = e.changedTouches[0]
+    x = dist.clientX
+    if(x >= 150 && x <= 300) {
+      this.style.marginLeft = '15px'
+    }
+  },
+  seenNotification: function(e) {
+   dist = e.changedTouches[0]
+   x = dist.clientX;
+   if(x>230 && x < 320) {
+     this.style.marginLeft = `0px`
+     
+   }
+   
+   
   }
 }
 window.onload =  function() {
@@ -424,6 +458,7 @@ requestData({method: 'post',url:'/sessions',params:{component:true},type:'json'}
           login()
         } else if(response.component == 'signup') {
           signup()
+        
         } else {
           main.update(components.reset);
         
@@ -502,6 +537,10 @@ function buildAllUI() {
     header.update(component);
     document.title = 'Home | Njuga - Ball'
     main.update(components.loader)
+    requestData({method:'post',url:'/notifications_handle',params:{action:'number',key:false,seen:false},type:'json'},function(response){
+      if(response.error) alert('OK')
+      header.update({states:{notifications:response}});
+    });
   });
   loadComponent('navigation',handlers,function(component){
     if(component.error) return showError(data={msg:'Error while processing component'});
@@ -525,6 +564,9 @@ function buildAllUI() {
           handlers.loadSlots()
         } else if(response.component === "slots"){
           handlers.loadSlots()
+        } else if(response.component == 'notifications') {
+         
+           handlers.showNotifications()
          } else {
           main.update(components.reset);
        main.update(components[response.component]);

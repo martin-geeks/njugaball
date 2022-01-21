@@ -7,8 +7,8 @@ import time,os
 from njugaball.utils import DateString,check_password,hash_password,generateOTP
 from scryp import encrypt,decrypt
 from sqlalchemy.inspection import inspect
-from njugaball.models import db,User,Draw
-from flask_socketio import SocketIO
+from njugaball.models import db,User,Draw,Notifications
+#from flask_socketio import SocketIO,send,emit
 KEY = "de1182b0f4203cad8d2ec629e35403d7"
 
 class Serializer(object):
@@ -23,6 +23,7 @@ class Serializer(object):
 
 
 app = Flask(__name__,static_folder='static')
+app.config['SECRET_KEY'] = "me"
 app.config['DEBUG'] = True
 app.secret_key = '23627853741284421'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -46,11 +47,11 @@ app.config['MAIL_USE_SSL'] = True
 app.config["LOG_TYPE"] = "JSON"
 app.config['LOG_FILENAME'] = 'njugaball-log'
 app.config['LOG_LOCATION'] = os.path.abspath('njugaball/logs')
-socketio = SocketIO()
+#socketio = SocketIO(cors_allowed_origins="*")
 Log(app)
 #import njugaball.models
 def create_app():
   db.init_app(app)
-  socketio.init_app(app)
+  #socketio.init_app(app)
   return app
 import njugaball.views

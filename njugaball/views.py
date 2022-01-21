@@ -1,6 +1,7 @@
 from njugaball import create_app
-from njugaball import db,Serializer,DateString,render_template,jsonify,request,make_response,redirect,session,time,inspect,json,encrypt,decrypt,hash_password,check_password,User,Draw,Mail,Message,generateOTP,socketio
-
+from njugaball import db,Serializer,DateString,render_template,jsonify,request,make_response,redirect,session,time,inspect,json,encrypt,decrypt,hash_password,check_password,User,Draw,Mail,Message,generateOTP,Notifications
+import time,os
+from urllib.parse import parse_qs
 app = create_app()
 mail = Mail(app)
 
@@ -14,7 +15,6 @@ def check_password(hashed,password_):
   password,salt = hashed.split(':')
   return password == hashlib.sha256(salt.encode() + password_.encode()).hexdigest()
 """
-
 dbUser = User()
 
 def f():
@@ -22,8 +22,13 @@ def f():
     pass
 
 app.before_request(f)
-
-
+"""
+def handle_notification(data):
+  json = {'hi':'Worked'}
+  print(data)
+  emit('notification',json)
+  print('Emmited')
+"""
 
 
 @app.route('/')
@@ -31,6 +36,7 @@ def home():
   db.create_all()
   res = make_response()
   #res.set_cookie('test',value='YES',max_age=None,path='/',domain='127.0.0.1')
+  #socketio.on_event('notification',handle_notification)
   print('COOKIE >>>',request.cookies.get('njugaball'))
   return render_template('root.html')
 
@@ -139,10 +145,18 @@ def page_not_found(error):
   res = make_response()
   path = request.path.split('/')
   component = path[1]
-  session['component'] = json.dumps({'url':request.path,'component':component,'title':component.title()})
-  print('$###$####')
-  print(session)
-  return redirect('/',302)
+  components_ = os.listdir(os.path.abspath(os.path.join('njugaball','static','components')))
+  components = []
+  for c in components_:
+    components.append(c.split('.')[0])
+  if component in components:
+    print('set component')
+    session['component'] = json.dumps({'url':request.path,'component':component,'title':component.title()})
+    return redirect('/',302)
+  else:
+    print('Not A component')
+    print(session)
+    return "hi"
 
 @app.route('/sessions',methods=['POST'])
 def sessions():
@@ -152,8 +166,6 @@ def sessions():
     print("TESTED")
   except KeyError:
     component = False
-  if component == 'static':
-    print('Yeskghhd')
   print('TEST COMPONENT:', component)
   if request.form['component']:
     if component:
@@ -197,14 +209,100 @@ def user():
     return jsonify(user)
   else:
     return jsonify({'error':True,'message':'Permission Denied'})
-
+@app.route('/getNotifications',methods=['GET'])
+def getNotifications():
+  username = json.loads(session['user'])['username']
+  #user = User.query.filter_by(username=username).first()
+  #noti = Notifications(title='Win Millions',text='Better late than never.')
+  #user.notifications.append(noti)
+  #User.save();
+  data = User.query.filter_by(username=username).first().notifications
+  notifications = Notifications.serialize_list(data)
+  for notification in notifications:
+    if notification['seen'] == False:
+      notification['color'] = 'bg-blue-200 c-dark'
+    else:
+      notification['color'] = ''
+    notification['id'] = encrypt(str(notification['id']),KEY)
+    del notification['user']
+    del notification['user_1']
+  notifications.reverse()
+  return jsonify({'notifications':notifications})
+@app.route('/notifications_handle',methods=['POST'])
+def notifications_a():
+  username = json.loads(session['user'])['username']
+  data = parse_qs(request.query_string.decode(),encoding="utf-8")
+  notifications_raw = User.query.filter_by(username=username).first().notifications
+  notifications = Notifications.serialize_list(notifications_raw)
+  if request.form['action'] == 'dismiss':
+    notifications_id = decrypt(request.form['key'],KEY)
+    for n in notifications_raw:
+      if int(notifications_id) == n.id:
+        Notifications.remove(n)
+        User.save()
+    data = User.query.filter_by(username=username).first().notifications
+    notifications_updated = Notifications.serialize_list(data)
+    print(notifications_updated)
+    for notification in notifications_updated:
+      del notification['user_1']
+      del notification['user']
+      notification['id'] = encrypt(str(notification['id']),KEY)
+    notifications_updated.reverse()
+    return jsonify(notifications_updated)
+  elif request.form['action'] == 'toggleseen':
+    seen = request.form['seen']
+    notifications_id = decrypt(request.form['key'],KEY)
+    notification_picked = None
+    for n in notifications_raw:
+      if int(notifications_id) == n.id:
+        notification_picked = n
+    #EMPTY LINE
+    if seen == 'false':
+      print('Not Seen')
+      notification_picked.seen = True
+      User.save()
+    elif seen == 'true':
+      print('Seen')
+      notification_picked.seen = False
+      User.save()
+    data = User.query.filter_by(username=username).first().notifications
+    notifications_updated = Notifications.serialize_list(data)
+    for notification in notifications_updated:
+      if notification['seen'] == False:
+        notification['color'] = 'bg-blue-200 c-dark'
+      else:
+        notification['color'] = ''
+      del notification['user']
+      del notification['user_1']
+      notification['id'] = encrypt(str(notification['id']),KEY)
+    notifications_updated.reverse()
+    return jsonify(notifications_updated)
+  elif request.form['action'] == 'number':
+    unseen = []
+    sawn = []
+    for i in notifications:
+      if i['seen'] == False:
+        unseen.append(i)
+      else:
+        sawn.append(i)
+    return jsonify({'total':len(notifications),'seen':len(sawn),'unseen':len(unseen)})
+"""
+@app.route('/notify',methods=['POST'])
+def notify():
+  socketio.on_event('notification',handle_notification)
+  print("SENT")
+  #emit('notification',{'data':"Worked!"},namespace='/notification')
+  return jsonify({})
 #SOCKET IO
 @socketio.on('my event')
 def handle_message(data):
   print('Message ',data)
 def ack():
   print("Sent MSG")
+
 @socketio.on('notification')
-def handle_notification():
-  json = {'error':True}
-  send(json,json=True,callback=ack)
+def data_handle(data):
+  print(11111111)
+  emit('notification',{'hi':True})
+  print(data)
+"""

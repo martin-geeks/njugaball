@@ -1,7 +1,7 @@
 {
-	"states":{"state":"","navbar":"flx-r"},
+	"states":{"state":"","navbar":"flx-r","notifications":{"unseen":""}},
 	"is":"div",
-	"class":"fxd t-0 w100 ",
+	"class":"fxd t-0 w100 z15",
 	"nodes":[
 	  {
 	    "is":"div",
@@ -19,7 +19,7 @@
 	   "is":"div",
 	   "class":"flx-r w30",
 	   "nodes":[
-	     {"is":"span","class":"uk-icon-button","props":{"uk-icon":"bell"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":""},"nodes":[""]}],"events":{"click":["@showNotifications"]}},
+	     {"is":"span","class":"uk-icon-button uk-button-danger","props":{"uk-icon":"bell","uk-tooltip":"You have @notifications.unseen notifications"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":"@notification.unseen"},"nodes":[]}],"events":{"click":["@showNotifications"]}},
 	     {"is":"span","class":"uk-icon-button" ,"props":{"uk-icon":"mail"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":""},"nodes":[""]}]}
 	     ]
 	 },

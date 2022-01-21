@@ -445,8 +445,21 @@ font-family: 'Teko', sans-serif;
   border-radius: 50%;
 }
 .bdb-black{
-  border-bottom: 0.5px solid black ;
+  border-bottom: 0.2px solid black ;
 }
 .bdb-grey{
   border-bottom: 0.5px solid #dadada;
+}
+.bg-blue-200{
+  background-color:#d6eef4 ;
+}
+.flxc{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.flxr{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

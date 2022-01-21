@@ -10,13 +10,15 @@ setup(
     packages=['njugaball'],
     include_package_data=True,
     install_requires=[
-        'flask',
+        'wheel',
+        'flask'
         'flask_sqlalchemy',
         'flask_mail',
         'tea_encrypt',
         'scryp',
         'sqlalchemy_serializer',
         'mysql',
+        "eventlet",
         'bcrypt',
         'flask_socketio',
         'flask_web_log'

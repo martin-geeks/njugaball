@@ -1,5 +1,5 @@
 from njugaball import SQLAlchemy,hash_password,check_password,DateString,inspect
-import time
+import time,datetime
 class Serializer(object):
   def serialize(self):
     return {c: getattr(self,c) for c in inspect(self).attrs.keys()}
@@ -12,6 +12,7 @@ class User(db.Model,Serializer):
   username = db.Column(db.String(200),unique=True,nullable=False)
   phone = db.Column(db.String(100),unique=True,nullable=False)
   draw = db.relationship('Draw',backref='user',lazy=True)
+  notifications = db.relationship('Notifications',backref='user',lazy=True)
   password = db.Column(db.String(200),unique=True,nullable=False)
   date = db.Column(db.String(30),unique=False,nullable=False)
   def temp_set(self,user,number,password,email=None):
@@ -83,3 +84,18 @@ class Draw(db.Model,Serializer):
     return draw
   def test():
     pass
+
+class Notifications(db.Model,Serializer):
+  id = db.Column(db.Integer,primary_key=True)
+  title = db.Column(db.String(50),nullable=False)
+  text = db.Column(db.String(1000),nullable=False)
+  seen = db.Column(db.Boolean,default=False)
+  date = db.Column(db.DateTime(),default=datetime.datetime.utcnow(),nullable=False)
+  user_1 = db.Column(db.Integer,db.ForeignKey('user.id'))
+  @staticmethod
+  def getByUsername(username):
+    user = User.query.filter_by(username=username)
+    return user
+  @staticmethod
+  def remove(notification):
+    db.session.delete(notification)

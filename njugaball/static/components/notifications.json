@@ -1,5 +1,5 @@
 {
-  "states":{"state":"","message":"No any notification"},
+  "states":{"state":"","message":"No any notification","bool":false},
   "is":"div",
   "class":"",
   "nodes":[
@@ -15,7 +15,7 @@
             {"is":"input","class":"uk-search-input","props":{"type":"search","placeholder":"Search notifications"}}
             ]
         },
-        {"is":"span","class":"uk-icon-button","props":{"uk-icon":"refresh"}},
+        {"is":"span","class":"uk-icon-button","props":{"uk-icon":"refresh"},"events":{"click":["@refreshNotifications"]}},
     {
       "is":"div",
       "class":"uk-inline",
@@ -32,22 +32,85 @@
         },
         {
           "is":"div",
+          "class":"uk-margin-remove",
           "props":{"uk-dropdown":"pos: top-right"},
           "nodes":[
             {"is":"ul","class":"uk-nav uk-dropdown-nav",
-            "loop":[{"title":"Mark all as seen","func":"mark_all","icon":"check"},
+            "loop":[{"title":"Mark all as seen","action":"seen","icon":"check"},
             {"title":"Unmark All","func":"unmark","icon":"close"}
             
             ],
             "nodes":[
-              {"is":"li","class":"uk-active tl","nodes":[{"is":"span","props":{"uk-icon":"@icon","data-action":"@func"}}," @title"]},
-              "@t"
+              {"is":"li","class":"uk-active tl","nodes":[{"is":"span","props":{"uk-icon":"@icon","data-action":"@func"}}," @title"]}
               ]}
             ]}
         ]
     }
         ]
         
+    },
+    {
+      "is":"div",
+      "class":"",
+      "meets":"@bool",
+      "nodes":["@message"]
+    },
+    {
+      "is":"div",
+      "class":"",
+      "loop":"@notifications",
+      "nodes":[
+        {
+          "is":"div",
+          "class":"flxr bdb-black @color",
+          "id":"",
+          "nodes":[
+             {"is":"div","class":"","nodes":[
+          {"is":"h5","class":"tl","nodes":["@title"]},
+           {"is":"p","class":"","nodes":["@text"]},
+           {"is":"span","class":"pt8","nodes":["@date"]}
+          ]},
+             {"is":"div","class":"flx-c","nodes":[
+            {
+      "is":"div",
+      "class":"uk-inline uk-margin-remove",
+      "nodes":[
+        {
+          "is":"button",
+          "class":"uk-icon-button",
+          "props":{"uk-icon":"more-vertical","data-id":"@id"},
+          "events":{"click":["@notificationOptionp"]},
+          "nodes":[
+            {
+              
+            }
+            ]
+        },
+        {
+          "is":"div",
+          "props":{"uk-dropdown":"pos: top-right"},
+          "nodes":[
+            {"is":"ul","class":"uk-nav uk-dropdown-nav",
+            "loop":[{"title":"Toggle Seen","action":"toggleseen","icon":"check"},
+            {"title":"Dismiss","action":"dismiss","icon":"close"}
+            
+            ],
+            "nodes":[
+              {"is":"li","class":"uk-active clickable-grey pd5 tl","nodes":[{"is":"span","props":{"uk-icon":"@icon"}},"@title"]
+                ,"props":{"data-action":"@action","data-seen":"@seen"}
+                ,"events":{"click":["@notificationOption"]}}
+              ]}
+            ]}
+        
+        ]
+    }
+    
+    ]}
+        ],
+        "props":{"data-original":"@id"},
+        "events":{"touchend":["@seenNotification"],"touchmove":["@closeNotification"]}
+        }
+        ]
     }
     ]
 }
