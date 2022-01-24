@@ -1,15 +1,15 @@
 {
 	"states":{"state":"","navbar":"flx-r","notifications":{"unseen":""}},
 	"is":"div",
-	"class":"fxd t-0 w100 z15",
+	"class":"abs t-0 w100 z20 bg-white",
 	"nodes":[
 	  {
 	    "is":"div",
-	    "class":"blue-grey darken-4 tc flx-r w100 pd5 bdb-grey m-only",
+	    "class":" tc flx-r w100 pd5 bdb-grey m-only",
 	    "nodes":[
 	 {
 	   "is":"div",
-	   "class":"c-dark p10  ",
+	   "class":" p10 w70 tl",
 	   "nodes":[
 	     {"is":"i","class":"ic ic-coin-dollar"},
 	     {"is":"span","class":"gfont pt12","nodes":[" Njuga - Ball"]}
@@ -17,10 +17,9 @@
 	 },
 	 {
 	   "is":"div",
-	   "class":"flx-r w30",
+	   "class":" w30",
 	   "nodes":[
-	     {"is":"span","class":"uk-icon-button uk-button-danger","props":{"uk-icon":"bell","uk-tooltip":"You have @notifications.unseen notifications"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":"@notification.unseen"},"nodes":[]}],"events":{"click":["@showNotifications"]}},
-	     {"is":"span","class":"uk-icon-button" ,"props":{"uk-icon":"mail"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":""},"nodes":[""]}]}
+	     {"is":"span","class":"uk-icon-button @notifications.state","props":{"uk-icon":"bell","uk-tooltip":"You have @notifications.unseen notifications"},"nodes":[{"is":"i","class":"c-alert","props":{"uk-badge":"@notification.unseen"},"nodes":[]}],"events":{"click":["@showNotifications"]}}
 	     ]
 	 },
 	 {

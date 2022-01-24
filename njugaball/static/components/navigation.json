@@ -1,9 +1,9 @@
 {
     "states":{"state":""},
     "is":"div",
-    "class":"w70 bd-black h70",
+    "class":"w60 bd-black h70 width-300",
     "id":"offcanvas-flip",
-    "props":{"uk-offcanvas":"flip: true; overlay: true"},
+    "props":{"uk-offcanvas":"flip: true; overlay: true;"},
     "nodes":[
      {
        "is":"div",

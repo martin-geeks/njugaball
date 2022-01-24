@@ -60,6 +60,9 @@ class User(db.Model,Serializer):
     else:
       return usr
   @staticmethod
+  def Username(username):
+    return User.query.filter_by(username=username).first()
+  @staticmethod
   def byColumn(column):
     phones = User.query.with_entities(column).all()
     return phones
@@ -67,16 +70,19 @@ class User(db.Model,Serializer):
 class Draw(db.Model,Serializer):
   id = db.Column(db.Integer,primary_key=True)
   draw_code = db.Column(db.String(2000),nullable=False,unique=True)
-  player_id = db.Column(db.String(2000),nullable=True,unique=True)
+  player_id = db.Column(db.String(2000),nullable=True,unique=False)
   picked = db.Column(db.Integer,nullable=True,unique=True)
-  state = db.Column(db.Boolean,unique=False,nullable=False)
-  date = db.Column(db.String(30),unique=False,nullable=False)
+  state = db.Column(db.Boolean,unique=False,nullable=False,default=False)
+  date = db.Column(db.DateTime(),default=datetime.datetime.utcnow(),nullable=False)
   user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
   DATA = None
   def create():
-    draw = Draw(state=False,date=DateString(),draw_code='2CF08XE')
+    draw = Draw(state=False,draw_code='2CF08XE')
     db.session.add(draw)
     return draw
+  @staticmethod
+  def byColumn(column):
+    return User.query.with_entities(column).all()
   def save():
     db.session.commit()
   def getAll():

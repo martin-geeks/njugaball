@@ -56,59 +56,35 @@
       "nodes":["@message"]
     },
     {
-      "is":"div",
+      "is":"ul",
       "class":"",
       "loop":"@notifications",
+      "props":{"uk-accordion":"multiple:true"},
       "nodes":[
         {
-          "is":"div",
-          "class":"flxr bdb-black @color",
-          "id":"",
-          "nodes":[
-             {"is":"div","class":"","nodes":[
-          {"is":"h5","class":"tl","nodes":["@title"]},
-           {"is":"p","class":"","nodes":["@text"]},
-           {"is":"span","class":"pt8","nodes":["@date"]}
-          ]},
-             {"is":"div","class":"flx-c","nodes":[
-            {
-      "is":"div",
-      "class":"uk-inline uk-margin-remove",
-      "nodes":[
-        {
-          "is":"button",
-          "class":"uk-icon-button",
-          "props":{"uk-icon":"more-vertical","data-id":"@id"},
-          "events":{"click":["@notificationOptionp"]},
+          "is":"li",
+          "class":"@color",
           "nodes":[
             {
-              
+              "is":"h5",
+              "class":" uk-accordion-title bg-default p10 tl pt11 @color",
+              "props":{"data-action":"@seen","data-id":"@id"},
+              "nodes":["@title hf"],
+              "events":{"mouseover":["@seenNotification"]}
+            },
+            {
+              "is":"div",
+              "class":" uk-accordion-content ",
+              "nodes":[
+                "@date",
+                {
+                  "is":"p",
+                  "class":"rd bg-default w80 p10 ma ",
+                  "nodes":["@text"]
+                }
+                ]
             }
             ]
-        },
-        {
-          "is":"div",
-          "props":{"uk-dropdown":"pos: top-right"},
-          "nodes":[
-            {"is":"ul","class":"uk-nav uk-dropdown-nav",
-            "loop":[{"title":"Toggle Seen","action":"toggleseen","icon":"check"},
-            {"title":"Dismiss","action":"dismiss","icon":"close"}
-            
-            ],
-            "nodes":[
-              {"is":"li","class":"uk-active clickable-grey pd5 tl","nodes":[{"is":"span","props":{"uk-icon":"@icon"}},"@title"]
-                ,"props":{"data-action":"@action","data-seen":"@seen"}
-                ,"events":{"click":["@notificationOption"]}}
-              ]}
-            ]}
-        
-        ]
-    }
-    
-    ]}
-        ],
-        "props":{"data-original":"@id"},
-        "events":{"touchend":["@seenNotification"],"touchmove":["@closeNotification"]}
         }
         ]
     }

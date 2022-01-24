@@ -1,7 +1,7 @@
 var components,user,header,navigation,main,root,lastErrorData;
 //var socket = io();
 
-var myNav = {"states":{"state":"people"},"is":"div","class":"","id":"offcanvas-flip","props":{"uk-offcanvas":"flip: false; overlay: true; mode: push"},"nodes":[
+var myNav = {"states":{"state":"people"},"is":"div","class":"uk-width-auto","id":"offcanvas-flip","props":{"uk-offcanvas":"flip: false; overlay: true; mode: push;width:100;"},"nodes":[
 			  {
 			    "is":"div",
 			    "class":"uk-offcanvas-bar",
@@ -11,9 +11,46 @@ var myNav = {"states":{"state":"people"},"is":"div","class":"","id":"offcanvas-f
 			        "class":"flx-r clickable-blue p10 rd",
 			        "nodes":[
 			          {"is":"span","props":{"uk-icon":"user"}},
-			          {"is":"span","nodes":["@navigationData.username"]}
+			          {"is":"span","class":"uk-strong","nodes":["@navigationData.username"]}
 			          ]
-			      }
+			      },
+			     {
+			            "is":"ul",
+			            "class":"",
+			            "props":{"uk-accordion":" multiple: true"},
+			            "nodes":[
+			              {
+			                "is":"li",
+			                "class":" clickable-blue",
+			                "nodes":["Draws"],
+			                "events":{"click":["@handlers.loadSlots"]}
+			              }
+			              ,
+			              {
+			                "is":"li",
+			                "class":"",
+			                "nodes":[
+			                  {
+			                  "is":"a",
+			                  "class":"uk-accordion-title clickable-blue pd5 rd",
+			                  "nodes":[" My Account"]
+			                  },
+			                  {
+			                    "is":"ul",
+			                    "class":" uk-accordion-content",
+			                    "nodes":[
+			                      {
+			                        "is":"li","class":" clickable-grey pd5 rd",
+			                        "nodes":[
+			                          "Deposit"
+			                          ]
+			                      }
+			                      ]
+			                  }
+			                  ]
+			              }
+			              ]
+			          }
 			      ]
 			  }
 			  ]}
@@ -329,7 +366,7 @@ var handlers = {
         
         main.update(components.reset);
         main.update(components.slots);
-        main.update({states: {slots:response.slots}})
+        main.update({states: {slots:response.slots,available:response.available}})
         pushState('slots','Slots','/slots')
       } else {
          main.update(components.reset);
@@ -387,15 +424,16 @@ var handlers = {
     main.update(components.loader)
   },
   showNotifications: function() {
-    main.update(components.reset);
-    main.update(components.notifications);
-    
+    main.update(components.loader);
 requestData({method:'get',url:'/getNotifications',type:'json'},function(response){
   if(response.error) return showError(data={msg:'Could not fetch  notifications'});
   if(response.notifications.length === 0) {
+    main.update(components.reset);
+    main.update(components.notifications)
     main.update({states: {message:"No Notifications",notifications:[]}});
   } else if(response.notifications.length >= 1) {
-    
+     main.update(components.reset);
+     main.update(components.notifications)
 main.update({states: {message:'',notifications:response.notifications}});
   }
   //alert(JSON.stringify(response))
@@ -424,14 +462,25 @@ main.update({states: {message:'',notifications:response.notifications}});
     }
   },
   seenNotification: function(e) {
-   dist = e.changedTouches[0]
-   x = dist.clientX;
-   if(x>230 && x < 320) {
-     this.style.marginLeft = `0px`
-     
-   }
-   
-   
+  seen = this.dataset.action;
+  id = this.dataset.id;
+requestData({method:'post',url:'/notifications_handle',params:{action:'seen',key:id,seen:seen},type:'json'},function(response){
+      if(response.error) return setPopup("Couldn't process.")
+      main.update({states: {notifications:response}})
+    });
+  },
+  ballOptions: function(){
+    code = this.parentElement.dataset.code;
+    number = this.dataset.number;
+    alert(number)
+    action = this.dataset.action;
+    switch(action) {
+      case 'buyNow':
+        requestData({method:'post',url:'/balls',params:{'action':action,code:code,number:number},type:'json'},function(response){
+          if (response.error) return setPopup('Couldn\'t purchase');
+          main.update({states: {slots:response.slots}})
+        })
+    }
   }
 }
 window.onload =  function() {
@@ -528,17 +577,23 @@ function buildAllUI() {
       if(response.error) return showError(data={msg:response.message});
  
       user = response;
-      ui.update({states:{navigationData:user}})
+      ui.update({states:{navigationData:user,handlers:handlers}})
+      
     });
     
   loadComponent('header',handlers,function(component){
     if(component.error) return showError(data={msg:'Error while processing component'});
     header.update(components.reset);
     header.update(component);
-    document.title = 'Home | Njuga - Ball'
+    //document.title = 'Home | Njuga - Ball'
     main.update(components.loader)
     requestData({method:'post',url:'/notifications_handle',params:{action:'number',key:false,seen:false},type:'json'},function(response){
       if(response.error) alert('OK')
+      if (response.unseen == 0){
+        response.state = 'bg-dark'
+      } else {
+        response.state = 'uk-button-danger'
+      }
       header.update({states:{notifications:response}});
     });
   });
@@ -565,7 +620,7 @@ function buildAllUI() {
         } else if(response.component === "slots"){
           handlers.loadSlots()
         } else if(response.component == 'notifications') {
-         
+           //main.update(components.reset)
            handlers.showNotifications()
          } else {
           main.update(components.reset);
@@ -578,7 +633,7 @@ function buildAllUI() {
         requestData({method:'get',url:'/user-info',type:'json'},function(response){
       if(response.error) return showError(data={msg:response.message});
       //main.update(components.reset)
-      //main.update(components.index)
+      main.update(components.index)
       main.update({states:response});
       user = response;
       

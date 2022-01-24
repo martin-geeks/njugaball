@@ -6,31 +6,134 @@
     {"is":"div","class":"tc  flx-r","nodes":[{"is":"button","class":"btn w30 bg-green-500 c-white pd5 flx-c tc circle-40 ","nodes":[{"is":"i","class":"ic ic-settings w100 tc mt-30"}, {"is":"span","class":"w100 tc none","nodes":["manage"]}]},{"is":"select","class":"p10 bg-black m2 rd c-white w70 ","nodes":[{"is":"option","class":"","nodes":["Change Ball"]},{"is":"option","class":"","nodes":["Clear All"]}]}]},
     {
       "is":"div",
-      "class":"w300 bd-black bdl-none bdr-none  m2 ",
-      "nodes":[
-        
-        {
-          "is":"ol",
-        "class":"mt-20 carousel",
-        "loop":"@slots",
+      "class":"p10 bg-blue rd ma c-white",
+      "nodes":[" My Selections "]
+    },
+     {
+          "is":"div",
+        "class":"h300 uk-position-relatie uk-visible-toggle uk-light c-dark ",
+        "props":{"uk-slider":"autoplay:true; autoplay-interval:3000; pause-on-hover:true;","tabindex":"-1"},
         "nodes":[
            {
-          "is":"a",
-          "class":" carousel-item sh-2  bd-black blue",
-          "props":{"href":"#one!"},
+             "is":"ul",
+             "class":"uk-slider-items  uk-child-width-1-3 uk-child-width-1-10@s uk-child-width-1-10@m ",
+             "loop":"@slots",
+             "nodes":[
+               {
+                 "is":"li",
+                 "class":"",
+                 "props":{"data-code":"@draw_code","position":"@picked"},
+                 "nodes":[
+                   
+                   {
+                     "is":"img",
+                     "class":"logo rotate-",
+                     "src":"@src",
+                     "nodes":[]
+                   },
+                   {
+                     "is":"div",
+                     "class":"uk-position-center uk-panel",
+                     "nodes":[
+                       {
+                         "is":"div",
+                         "class":"bg-black c-white p10 rd uk-inline",
+                         "nodes":[
+                           {
+                             "is":"img",
+                             "class":"logo uk-icon-button",
+                             "src":"@src"
+                           },{
+          "is":"div",
+          "class":"",
+          "props":{"uk-dropdown":"pos: top-right"},
           "nodes":[
-            {"is":"h1","class":" em3 gfont text-3xl","nodes":["@picked"]},
-            {
-              "is":"span",
-              "class":"p10 pt8",
-              "nodes":["@draw_code"]
-            }
-            ]
-        }
+            {"is":"ul","class":"uk-nav uk-dropdown-nav uk-position-relative z15",
+            "props":{"data-code":"@code","number":"@position"},
+            "loop":[{"title":" Replace","action":"replace","cost":"K5","class":" tc bg-blue c-white"},{"title":"Delete","action":"delete","icon":"cart","cost":""},
+            {"title":"Cancel","func":"","action":"cancel","icon":"close","cost":""}
+            
+            ],
+            "nodes":[
+              {"is":"li","class":"uk-active tl clickable-grey rd pd5 @class","props":{"data-action":"@action","data-number":"@position","data-code":"@draw_code"},"nodes":[{"is":"span","props":{"uk-icon":"@icon"}}," @title @cost"],"events":{"click":["@ballOptions"]}}
+              ]}
+            ]}
+                           ]
+                       }
+                       ]
+                   }
+                   ]
+               }
+               ]
+           }
           ]
         }
-        ]
+        ,
+            {
+      "is":"div",
+      "class":"p10 bg-blue rd ma c-white",
+      "nodes":["More Selections "]
     },
+        {
+          "is":"div",
+        "class":"h300 uk-position-relatie uk-visible-toggle uk-light c-dark ",
+        "props":{"uk-slider":"autoplay:true; autoplay-interval:3000; pause-on-hover:true;","tabindex":"-1"},
+        "nodes":[
+           {
+             "is":"ul",
+             "class":"uk-slider-items uk-child-width-1-3 uk-child-width-1-10@s uk-child-width-1-10@m ",
+             "loop":"@available",
+             "nodes":[
+               {
+                 "is":"li",
+                 "class":"",
+                 "props":{"data-code":"@code","position":"@position"},
+                 "nodes":[
+                   
+                   {
+                     "is":"img",
+                     "class":"logo rotate-",
+                     "src":"@src",
+                     "nodes":[]
+                   },
+                   {
+                     "is":"div",
+                     "class":"uk-position-center uk-panel",
+                     "nodes":[
+                       {
+                         "is":"div",
+                         "class":"bg-black c-white p10 rd uk-inline",
+                         "nodes":[
+                           {
+                             "is":"img",
+                             "class":"logo uk-icon-button",
+                             "src":"@src2"
+                           },{
+          "is":"div",
+          "class":"",
+          "props":{"uk-dropdown":"pos: top-right"},
+          "nodes":[
+            {"is":"ul","class":"uk-nav uk-dropdown-nav uk-position-relative z15",
+            "props":{"data-code":"@code","number":"@position"},
+            "loop":[{"title":" Buy Now","action":"buyNow","cost":"K5","class":" tc bg-blue c-white"},{"title":"Add to Cart","action":"add","icon":"cart","cost":""},
+            {"title":"Remove","func":"","action":"remove","icon":"close","cost":""}
+            
+            ],
+            "nodes":[
+              {"is":"li","class":"uk-active tl clickable-grey rd pd5 @class","props":{"data-action":"@action","data-number":"@position","data-code":"@code"},"nodes":[{"is":"span","props":{"uk-icon":"@icon"}}," @title @cost"],"events":{"click":["@ballOptions"]}}
+              ]}
+            ]}
+                           ]
+                       }
+                       ]
+                   }
+                   ]
+               }
+               ]
+           }
+          ]
+        }
+        ,
     {
       "is":"div",
       "class":"p10 w100 mt-5 bg-white c-dark",

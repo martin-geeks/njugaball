@@ -37,7 +37,7 @@ def home():
   res = make_response()
   #res.set_cookie('test',value='YES',max_age=None,path='/',domain='127.0.0.1')
   #socketio.on_event('notification',handle_notification)
-  print('COOKIE >>>',request.cookies.get('njugaball'))
+  #print('COOKIE >>>',json.loads(request.cookies.get('njugaball')))
   return render_template('root.html')
 
 @app.route('/welcome')
@@ -66,11 +66,9 @@ def login():
     username = request.form['username']
     password = request.form['password']
     user = User.byUsername(username=username)
-    print(check_password(user['password'],password))
     if user is not None and check_password(user['password'],password):
       response.set_cookie('njugaball',json.dumps(user),max_age=86400,httponly=True)
       d = encrypt(password,KEY)
-      print(d)
       return jsonify({'username':user['username'],'password':str(d)})
     return jsonify({'error':True,'message':'Something went wrong!'})
 
@@ -125,18 +123,64 @@ def create_user():
 @app.route("/draws")
 def slots():
   if session['user']:
-    print(session)
     user = json.loads(session['user'])
     data = User.query.filter_by(username=user['username']).first().draw
+    draws = Draw.serialize_list(data)
+    draws2 = Draw.byColumn(Draw.picked)
+    final_ = []
+    for i in draws2:
+      final_.append(i[0])
+    for draw in draws:
+      del draw['user']
+      del draw['user_id']
+      del draw['id']
+    balls_path= os.listdir(os.path.abspath(os.path.join('njugaball','static','balls','styled')))
+    balls_path_2 = os.listdir(os.path.abspath(os.path.join('njugaball','static','balls','normal')))
+    balls = []
+    for i in balls_path:
+      ball = {}
+      ball['src'] = os.path.join('/static','balls','styled',i)
+      ball['src2'] = os.path.join('/static','balls','normal',i.replace('v1','v2'))
+      ball['position'] = balls_path.index(i) + 1
+      ball['code'] = encrypt(str(ball['position']),KEY)
+      balls.append(ball)
+    for b in balls:
+      f = None
+      for d in draws:
+        if b['position'] == d['picked']:
+          d['src'] = b['src2']
+          #del balls[index]
+    for b in balls:
+      for d in final_:
+        if b['position'] == d:
+          index = balls.index(b)
+          del balls[index]
+    return jsonify({'slots':draws,'available':balls})
+  else:
+    return jsonify({'slots':False,'msg':'No Slots Available','available':[]})
+
+@app.route('/balls',methods=['POST'])
+def balls():
+  #EMPTY LINE
+  username = json.loads(request.cookies.get('njugaball'))['username']
+  user = User.Username(username)
+  number = str(request.form['number'])
+  code = request.form['code']
+  player_id = encrypt(username,KEY)
+  if request.form['action'] == 'buyNow':
+    draw = Draw(draw_code=code,picked=number,player_id=player_id,state=True)
+    user.draw.append(draw)
+    User.save()
+    data = User.query.filter_by(username=username).first().draw
     draws = Draw.serialize_list(data)
     for draw in draws:
       del draw['user']
       del draw['user_id']
       del draw['id']
-    return jsonify({'slots':draws})
+    print(draws)
+    return jsonify({'status':True,'slots':draws})
   else:
-    return jsonify({'slots':False,'msg':'No Slots Available'})
-
+    return jsonify({'error':True})
 
 
 #ERROR HANDLERS
@@ -156,6 +200,8 @@ def page_not_found(error):
   else:
     print('Not A component')
     print(session)
+    res.set_cookie('test',value='YES',max_age=None,path='/',domain='127.0.0.1')
+    print(request.cookies.get('njugaball'))
     return "hi"
 
 @app.route('/sessions',methods=['POST'])
@@ -231,7 +277,7 @@ def getNotifications():
 @app.route('/notifications_handle',methods=['POST'])
 def notifications_a():
   username = json.loads(session['user'])['username']
-  data = parse_qs(request.query_string.decode(),encoding="utf-8")
+  #data = parse_qs(request.query_string.decode(),encoding="utf-8")
   notifications_raw = User.query.filter_by(username=username).first().notifications
   notifications = Notifications.serialize_list(notifications_raw)
   if request.form['action'] == 'dismiss':
@@ -286,6 +332,27 @@ def notifications_a():
       else:
         sawn.append(i)
     return jsonify({'total':len(notifications),'seen':len(sawn),'unseen':len(unseen)})
+  elif request.form['action'] == 'seen':
+    seen = request.form['seen']
+    notifications_id = decrypt(request.form['key'],KEY)
+    notification_picked = None
+    for n in notifications_raw:
+      if int(notifications_id) == n.id:
+        notification_picked = n
+    notification_picked.seen = True
+    User.save()
+    data = User.query.filter_by(username=username).first().notifications
+    notifications_updated = Notifications.serialize_list(data)
+    for notification in notifications_updated:
+      if notification['seen'] == False:
+        notification['color'] = 'bg-blue-200 c-dark'
+      else:
+        notification['color'] = ''
+      del notification['user']
+      del notification['user_1']
+      notification['id'] = encrypt(str(notification['id']),KEY)
+    notifications_updated.reverse()
+    return jsonify(notifications_updated)
 """
 @app.route('/notify',methods=['POST'])
 def notify():
