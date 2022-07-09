@@ -1,5 +1,6 @@
 # Njugaball
 A web application for playing real Lottery. 
+[Under Development]
 #### Installation
 ```shell
 git clone https://github.com/martin-geeks/njugaball
