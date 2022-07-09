@@ -8,7 +8,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 #### Database Setup
-Using your editor open __init__ . py and modify the following:
+Using your editor open &ndash;init&ndash;.py and modify the following:
 Put your MYSQL Username and Password; and hostname.
 ##### Do not forget the database name
 ```python
