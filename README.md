@@ -39,9 +39,9 @@ export FLASK_APP=njugaball
 export FLASK_ENV=DEVELOPMENT
 export FLASK_DEBUG=TRUE
 flask run
-```powershell
-##### Windows Powershell
 ```
+#####Windows Powershell
+```powershell
 $Env:FLASK_APP = 'njugaball'
 $Env:FLASK_ENV = 'DEVELOPMENT'
 $Env:FLASK_DEBUG = 'TRUE'
